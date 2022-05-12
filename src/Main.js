@@ -9,7 +9,9 @@ class Main extends React.Component {
       searchQuery: "",
       cityName: "",
       long: "",
-      lati: ""
+      lati: "",
+      map: ""
+
     }
   }
   getLocation = async () => {
