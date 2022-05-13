@@ -24,6 +24,7 @@ class Main extends React.Component {
       cityName: response.data[0].display_name,
       long: response.data[0].lon,
       lati: response.data[0].lat,
+      // map: response.map[0].map,
     })
 
   };
@@ -38,6 +39,9 @@ class Main extends React.Component {
           placeholder="search for a city!"
         />
         <button onClick={this.getLocation}>Explore!</button>
+        {this.state.cityName &&
+          <h2>The city you searched for is {this.state.cityName}  {this.state.long} {this.state.lati}</h2>
+        }
       </div>
     );
   }
