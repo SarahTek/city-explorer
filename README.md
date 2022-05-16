@@ -19,6 +19,7 @@
 
 ## Credit and Collaborations
 Collaborators: Martha and Jim.
+- I just want to thank and give credit to Luis, he helped me with deploying the Map.
 
 - ![Web Request Response Cycle](./public/Web%20Request%20Response%20Cycle.png)
 
@@ -27,11 +28,11 @@ Name of feature: City Explorer
 
 Estimate of time needed to complete: 1 hour
 
-Start time: 11:30pm
+Start time: 07:00pm
 
-Finish time: 12:30
+Finish time: 10:30
 
-Actual time needed to complete: 1 hour
+Actual time needed to complete: 3 and half hours
 
 
  
