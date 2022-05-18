@@ -34,30 +34,29 @@ class Main extends React.Component {
     this.getWeather();
   };
 
-  getWeather = async (event) => {
-    event.preventDefault();
+  getWeather = async () => {
     try {
       const url = `http://localhost:3001/weather?type=${this.state.searchQuery}`;
-
+      console.log(url);
       const response = await axios.get(url);
+      console.log(response);
       this.setState({
-        weather: response.data.map(banana => (`In this ${banana.date}  ${banana.description}`))
+        weather: response.data.arr.map(banana => (`In this ${banana.date}  ${banana.description}`))
       })
     } catch (error) {
+      console.log(typeof error);
       this.handleError(error);
     };
   }
 
 
-  handleClick = (event) => {
-    event.preventDefault();
-    this.getLocation();
-    this.getWeather();
-  };
+
 
   handleError = (error) => {
+    console.log(error);
     this.setState({
-      resError: `Error Status: Code ${error.response.status}, ${error.response.data.error}`,
+      resError: "Something happen we can't fix the error",
+      //  Code ${error.response.status}, ${error.response.data.error}`,
       weather: [],
       allData: '',
 
