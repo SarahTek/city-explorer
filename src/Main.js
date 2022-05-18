@@ -1,7 +1,8 @@
 import React from 'react';
 import axios from 'axios';
-import Map from './Map'
-import Weather from './Weather'
+import Map from './Map';
+import Weather from './Weather';
+import Button from 'react-bootstrap/Button';
 
 class Main extends React.Component {
   constructor(props) {
@@ -9,7 +10,8 @@ class Main extends React.Component {
     this.state = {
       searchQuery: "",
       allData: "",
-      weather: []
+      weather: [],
+      error: ''
     }
   }
   getLocation = async () => {
@@ -24,11 +26,15 @@ class Main extends React.Component {
 
 
   getWeather = async () => {
-    const url = `http://localhost:3001/weather?type=${this.state.searchQuery}`;
+    try {
+      const url = `http://localhost:3001/weather?type=${this.state.searchQuery}`;
 
-    const response = await axios.get(url);
-    this.setState({
-      weather: response.data.arr.map(banana => (`In this ${banana.date}  ${banana.description}`))
+      const response = await axios.get(url);
+      this.setState({
+        weather: response.data.arr.map(banana => (`In this ${banana.date}  ${banana.description}`))
+      }catch (error) {
+       this.errorHandler(error);
+      }
     })
   };
 
@@ -38,7 +44,10 @@ class Main extends React.Component {
     this.getLocation();
     this.getWeather();
   };
-
+  
+errorHandler = (e) => {
+  this.setStat({ showError : `status code : ${error.response.status}`})
+}
   render() {
     console.log("this.state in App.js", this.state);
     return (
@@ -48,11 +57,11 @@ class Main extends React.Component {
           onChange={(event) => this.setState({ searchQuery: event.target.value })}
           placeholder="search for a city!"
         />
-        <button onClick={this.handleClick} >Explore!</button>
+        <Button onClick={this.handleClick} type="submit" size="lg">Explore!</Button>
         {this.state.allData &&
           <h2>The city you searched for is {this.state.allData.display_name} , Long{this.state.allData.lon} ,  {this.state.allData.lat}</h2>
         }
-        <Weather weather = {this.state.weather}/>
+        <Weather weather={this.state.weather} />
         <Map allData={this.state.allData} />
       </div>
     );
