@@ -5,6 +5,7 @@ import Weather from './Weather'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Form from 'react-bootstrap/Form';
 import Button from "react-bootstrap/Button";
+import './index.css'
 
 class Main extends React.Component {
   constructor(props) {
@@ -103,19 +104,3 @@ class Main extends React.Component {
 
 
 export default Main;
-
-
-
-
-
-
-
-
-{/* <input
-          onChange={(event) => this.setState({ searchQuery: event.target.value })}
-          placeholder="search for a city!"
-        />
-        <button onClick={this.handleClick} >Explore!</button>
-        {this.state.allData &&
-          <h2>The city you searched for is {this.state.allData.display_name} , Long{this.state.allData.lon} ,  {this.state.allData.lat}</h2>
-        } */}
