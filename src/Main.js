@@ -32,22 +32,21 @@ class Main extends React.Component {
       const response = await axios.get(url);
       this.setState({
         weather: response.data.arr.map(banana => (`In this ${banana.date}  ${banana.description}`))
-      }catch (error) {
-       this.errorHandler(error);
-      }
-    })
-  };
-
+      });
+    } catch (error) {
+      this.errorHandler(error);
+    };
+  }
 
   handleClick = (event) => {
     event.preventDefault();
     this.getLocation();
     this.getWeather();
   };
-  
-errorHandler = (e) => {
-  this.setStat({ showError : `status code : ${error.response.status}`})
-}
+
+  errorHandler = (e) => {
+    this.setStat({ showError: `status code : ${error.response.status}` })
+  }
   render() {
     console.log("this.state in App.js", this.state);
     return (
