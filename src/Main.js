@@ -25,7 +25,6 @@ class Main extends React.Component {
       const url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATION_KEY}&q=${this.state.searchQuery}&format=json`;
       console.log("Miami: ", url);
       const response = await axios.get(url);
-
       console.log("Response from Axios: ", response.data[0]);
       this.setState({ allData: response.data[0], showInfo: true, showMap: true })
     } catch (error) {
@@ -49,8 +48,15 @@ class Main extends React.Component {
     };
   }
 
+  getMovie = async () => {
+    try {
+      const url = ${process.env.};
 
-
+    }catch(error){
+      console.log(error)
+      this.handleError(error)
+    };
+  }
 
   handleError = (error) => {
     console.log(error);
