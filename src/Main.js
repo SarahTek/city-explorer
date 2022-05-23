@@ -41,6 +41,22 @@ class Main extends React.Component {
       console.log(response);
       this.setState({
         weather: response.data.arr.map(banana => (`In this ${banana.date}  ${banana.description}`))
+
+      });
+    } catch (error) {
+      this.errorHandler(error);
+    };
+  }
+
+  handleClick = (event) => {
+    event.preventDefault();
+    this.getLocation();
+    this.getWeather();
+  };
+
+  errorHandler = (e) => {
+    this.setStat({ showError: `status code : ${error.response.status}` })
+  }
       })
     } catch (error) {
       console.log(typeof error);
