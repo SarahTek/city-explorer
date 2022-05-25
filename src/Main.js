@@ -3,6 +3,8 @@ import axios from 'axios';
 import Map from './Map';
 import Weather from './Weather';
 import Button from 'react-bootstrap/Button';
+import Movies from './Movies';
+
 
 class Main extends React.Component {
   constructor(props) {
@@ -11,43 +13,67 @@ class Main extends React.Component {
       searchQuery: "",
       allData: "",
       weather: [],
-      error: ''
+      error: '',
+      movies: ''
     }
   }
   getLocation = async () => {
-    const url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATION_KEY}&q=${this.state.searchQuery}&format=json`;
-    console.log("Miami: ", url);
-    const response = await axios.get(url);
+    try {
+      const url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATION_KEY}&q=${this.state.searchQuery}&format=json`;
+      console.log("Miami: ", url);
+      const response = await axios.get(url);
 
-    console.log("Response from Axios: ", response.data[0]);
-    this.setState({ allData: response.data[0] })
-
+      console.log("Response from Axios: ", response.data[0]);
+      this.setState({ allData: response.data[0] }, this.callAll);
+    } catch (error) {
+      this.errorHandler(error);
+    }
   };
 
 
   getWeather = async () => {
     try {
-      const url = `http://localhost:3001/weather?type=${this.state.searchQuery}`;
-
+      const url = `${process.env.REACT_APP_SERVER}/weather?lat=${this.state.allData.lat}&lon=${this.state.allData.lon}`;
       const response = await axios.get(url);
       this.setState({
-        weather: response.data.arr.map(banana => (`In this ${banana.date}  ${banana.description}`))
+        weather: response.data
       });
     } catch (error) {
       this.errorHandler(error);
     };
   }
 
+  getMovies = async () => {
+    try {
+      
+      const url = `${process.env.REACT_APP_SERVER}/movies?searchQuery=${this.state.allData.display_name}`;
+      const response = await axios.get(url);
+      this.setState({
+        movies: response.data
+      });
+    } catch (error) {
+      this.errorHandler(error);
+    }
+  }
+
   handleClick = (event) => {
     event.preventDefault();
     this.getLocation();
-    this.getWeather();
-  };
+  }; 
 
-  errorHandler = (e) => {
-    this.setStat({ showError: `status code : ${error.response.status}` })
+
+callAll = () => {
+  this.getWeather();
+  this.getMovies();
+}
+
+
+
+  errorHandler = (error) => {
+    this.setState({ showError: `status code : ${error.response.status}` })
   }
   render() {
+
     console.log("this.state in App.js", this.state);
     return (
       <div className='Main'>
@@ -61,6 +87,7 @@ class Main extends React.Component {
           <h2>The city you searched for is {this.state.allData.display_name} , Long{this.state.allData.lon} ,  {this.state.allData.lat}</h2>
         }
         <Weather weather={this.state.weather} />
+        <Movies movies = {this.state.movies} />
         <Map allData={this.state.allData} />
       </div>
     );
