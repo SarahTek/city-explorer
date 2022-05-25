@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Movies from './Movies';
 
 
+
 class Main extends React.Component {
   constructor(props) {
     super(props);
@@ -18,23 +19,30 @@ class Main extends React.Component {
     }
   }
   getLocation = async () => {
+
+     
+
     try {
       const url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATION_KEY}&q=${this.state.searchQuery}&format=json`;
       console.log("Miami: ", url);
       const response = await axios.get(url);
+
 
       console.log("Response from Axios: ", response.data[0]);
       this.setState({ allData: response.data[0] }, this.callAll);
     } catch (error) {
       this.errorHandler(error);
     }
-  };
 
+  };
 
   getWeather = async () => {
     try {
+
       const url = `${process.env.REACT_APP_SERVER}/weather?lat=${this.state.allData.lat}&lon=${this.state.allData.lon}`;
+
       const response = await axios.get(url);
+      console.log(response);
       this.setState({
         weather: response.data
       });
@@ -72,12 +80,42 @@ callAll = () => {
   errorHandler = (error) => {
     this.setState({ showError: `status code : ${error.response.status}` })
   }
+      })
+    } catch (error) {
+      console.log(typeof error);
+      this.handleError(error);
+    };
+  }
+
+  getMovie = async () => {
+    try {
+      const url = ${process.env.};
+
+    }catch(error){
+      console.log(error)
+      this.handleError(error)
+    };
+  }
+
+  handleError = (error) => {
+    console.log(error);
+    this.setState({
+      resError: "Something happen we can't fix the error",
+      //  Code ${error.response.status}, ${error.response.data.error}`,
+      weather: [],
+      allData: '',
+
+    })
+  }
+
+
   render() {
 
     console.log("this.state in App.js", this.state);
     return (
       <div className='Main'>
         <h1>Welcome to City Explorer!</h1>
+
         <input
           onChange={(event) => this.setState({ searchQuery: event.target.value })}
           placeholder="search for a city!"
@@ -89,6 +127,7 @@ callAll = () => {
         <Weather weather={this.state.weather} />
         <Movies movies = {this.state.movies} />
         <Map allData={this.state.allData} />
+
       </div>
     );
   }
