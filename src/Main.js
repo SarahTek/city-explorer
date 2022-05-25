@@ -18,16 +18,14 @@ class Main extends React.Component {
       movies: ''
     }
   }
-  getLocation = async () => {
 
-     
+
+  getLocation = async () => {
 
     try {
       const url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATION_KEY}&q=${this.state.searchQuery}&format=json`;
       console.log("Miami: ", url);
       const response = await axios.get(url);
-
-
       console.log("Response from Axios: ", response.data[0]);
       this.setState({ allData: response.data[0] }, this.callAll);
     } catch (error) {
@@ -53,7 +51,6 @@ class Main extends React.Component {
 
   getMovies = async () => {
     try {
-      
       const url = `${process.env.REACT_APP_SERVER}/movies?searchQuery=${this.state.allData.display_name}`;
       const response = await axios.get(url);
       this.setState({
@@ -67,42 +64,27 @@ class Main extends React.Component {
   handleClick = (event) => {
     event.preventDefault();
     this.getLocation();
-  }; 
+  };
 
 
-callAll = () => {
-  this.getWeather();
-  this.getMovies();
-}
-
-
+  callAll = () => {
+    this.getWeather();
+    this.getMovies();
+  }
 
   errorHandler = (error) => {
     this.setState({ showError: `status code : ${error.response.status}` })
-  }
-   
-
-  getMovie = async () => {
-    try {
-      const url = ${process.env.};
-
-    }catch(error){
-      console.log(error)
-      this.handleError(error)
-    };
   }
 
   handleError = (error) => {
     console.log(error);
     this.setState({
       resError: "Something happen we can't fix the error",
-      //  Code ${error.response.status}, ${error.response.data.error}`,
       weather: [],
       allData: '',
 
     })
-  }
-
+  };
 
   render() {
 
@@ -120,7 +102,7 @@ callAll = () => {
           <h2>The city you searched for is {this.state.allData.display_name} , Long{this.state.allData.lon} ,  {this.state.allData.lat}</h2>
         }
         <Weather weather={this.state.weather} />
-        <Movies movies = {this.state.movies} />
+        <Movies movies={this.state.movies} />
         <Map allData={this.state.allData} />
 
       </div>
