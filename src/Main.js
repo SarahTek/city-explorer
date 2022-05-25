@@ -80,12 +80,7 @@ callAll = () => {
   errorHandler = (error) => {
     this.setState({ showError: `status code : ${error.response.status}` })
   }
-      })
-    } catch (error) {
-      console.log(typeof error);
-      this.handleError(error);
-    };
-  }
+   
 
   getMovie = async () => {
     try {
