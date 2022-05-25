@@ -1,11 +1,11 @@
 import React from 'react';
 import axios from 'axios';
-import Map from './Map'
-import Weather from './Weather'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Form from 'react-bootstrap/Form';
-import Button from "react-bootstrap/Button";
-import './index.css'
+import Map from './Map';
+import Weather from './Weather';
+import Button from 'react-bootstrap/Button';
+import Movies from './Movies';
+
+
 
 class Main extends React.Component {
   constructor(props) {
@@ -14,48 +14,71 @@ class Main extends React.Component {
       searchQuery: "",
       allData: "",
       weather: [],
-      resError: "",
-      showMap: false,
-      showInfo: false,
+      error: '',
+      movies: ''
     }
   }
-  getLocation = async (event) => {
-    event.preventDefault();
+  getLocation = async () => {
+
+     
+
     try {
       const url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATION_KEY}&q=${this.state.searchQuery}&format=json`;
       console.log("Miami: ", url);
       const response = await axios.get(url);
+
+
       console.log("Response from Axios: ", response.data[0]);
-      this.setState({ allData: response.data[0], showInfo: true, showMap: true })
+      this.setState({ allData: response.data[0] }, this.callAll);
     } catch (error) {
-      this.handleError(error)
+      this.errorHandler(error);
     }
-    this.getWeather();
+
   };
 
   getWeather = async () => {
     try {
-      const url = `http://localhost:3001/weather?type=${this.state.searchQuery}`;
-      console.log(url);
+
+      const url = `${process.env.REACT_APP_SERVER}/weather?lat=${this.state.allData.lat}&lon=${this.state.allData.lon}`;
+
       const response = await axios.get(url);
       console.log(response);
       this.setState({
-        weather: response.data.arr.map(banana => (`In this ${banana.date}  ${banana.description}`))
-
+        weather: response.data
       });
     } catch (error) {
       this.errorHandler(error);
     };
   }
 
+  getMovies = async () => {
+    try {
+      
+      const url = `${process.env.REACT_APP_SERVER}/movies?searchQuery=${this.state.allData.display_name}`;
+      const response = await axios.get(url);
+      this.setState({
+        movies: response.data
+      });
+    } catch (error) {
+      this.errorHandler(error);
+    }
+  }
+
   handleClick = (event) => {
     event.preventDefault();
     this.getLocation();
-    this.getWeather();
-  };
+  }; 
 
-  errorHandler = (e) => {
-    this.setStat({ showError: `status code : ${error.response.status}` })
+
+callAll = () => {
+  this.getWeather();
+  this.getMovies();
+}
+
+
+
+  errorHandler = (error) => {
+    this.setState({ showError: `status code : ${error.response.status}` })
   }
       })
     } catch (error) {
@@ -87,37 +110,24 @@ class Main extends React.Component {
 
 
   render() {
+
     console.log("this.state in App.js", this.state);
     return (
       <div className='Main'>
         <h1>Welcome to City Explorer!</h1>
 
-        <Form onSubmit={this.getLocation}>
-          <Form.Group className="value" controlId="name">
-            <Form.Label>Search</Form.Label>
-            <Form.Control
-              onChange={(event) => this.setState({ searchQuery: event.target.value })}
-              placeholder="search for a city!"
-            />
-          </Form.Group>
-          <Button type='submit' >Explore </Button>
-        </Form>
-        <>
-          <Weather weather={this.state.weather} />
-          {this.state.showMap &&
+        <input
+          onChange={(event) => this.setState({ searchQuery: event.target.value })}
+          placeholder="search for a city!"
+        />
+        <Button onClick={this.handleClick} type="submit" size="lg">Explore!</Button>
+        {this.state.allData &&
+          <h2>The city you searched for is {this.state.allData.display_name} , Long{this.state.allData.lon} ,  {this.state.allData.lat}</h2>
+        }
+        <Weather weather={this.state.weather} />
+        <Movies movies = {this.state.movies} />
+        <Map allData={this.state.allData} />
 
-            <Map allData={this.state.allData} />
-          }
-          {this.state.showInfo &&
-            <div>
-              <h2>The city you searched for is {this.state.allData.display_name}  </h2>
-              <h2>The Longitude for the sity you searched is: {this.state.allData.lon}</h2>
-              <h2>The Latitude for the sity you searched is: {this.state.allData.lat}</h2>
-
-            </div>
-          }
-        </>
-        <h3>{this.state.resError}</h3>
       </div>
     );
   }
