@@ -101,9 +101,9 @@ class Main extends React.Component {
         {this.state.allData &&
           <h2>The city you searched for is {this.state.allData.display_name} , Long{this.state.allData.lon} ,  {this.state.allData.lat}</h2>
         }
+        <Map allData={this.state.allData} />
         <Weather weather={this.state.weather} />
         <Movies movies={this.state.movies} />
-        <Map allData={this.state.allData} />
 
       </div>
     );
