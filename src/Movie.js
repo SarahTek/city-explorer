@@ -4,6 +4,7 @@ import Container from 'react-bootstrap/Container';
 
 
 class Movie extends React.Component {
+  
   render() {
     return (
       <Container>
