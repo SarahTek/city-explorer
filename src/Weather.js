@@ -1,19 +1,17 @@
 
 import React from "react";
-
+import WeatherDay from './WeatherDay';
 
 class Weather extends React.Component {
-
-
-  render() {
-    console.log(this.props.weather);
+render() {
+    // console.log(this.props.weather);
     return (
       <div className="">
-      {
-        this.props.weather && this.props.weather.map(value => (
-          <h3>{value.description} {value.date}</h3>
-        ))
-      }
+        {
+          this.props.weather && this.props.weather.map(value => (
+            <WeatherDay description={value.description} date={value.date}/>
+          ))
+        }
       </div>
     );
   }
