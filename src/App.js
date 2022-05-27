@@ -2,7 +2,7 @@ import React from 'react';
 import Main from './Main';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import './index.css';
+// import './index.css';
 import Header from './Header';
 import Footer from './Footer';
 
