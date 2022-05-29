@@ -1,16 +1,15 @@
 import React from "react";
-import { Card, Container } from "react-bootstrap";
-// import weatherDay from './weatherDay';
+import Accordion from "react-bootstrap/Accordion";
 
 
 class WeatherDay extends React.Component {
-
   render() {
     return (
-      <Container>
-        <Card.Title>this.props.date</Card.Title>
-        <Card.Text>{this.props.description}</Card.Text>
-      </Container>
+      <Accordion.Item eventKey={this.props.idx} key={this.props.idx}>
+        <Accordion.Header>Date: {this.props.dayObj.day}</Accordion.Header>
+        <Accordion.Body>Forcast Description: {this.props.dayObj.description}</Accordion.Body>
+      </Accordion.Item>
+
     )
   }
 

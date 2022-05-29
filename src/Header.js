@@ -1,16 +1,10 @@
 import React from "react";
-
-
-
-
 class Header extends React.Component {
-
-
   render() {
     return (
-      <div className="">
-         <h1>Welcome to City Explorer!</h1>
-      </div>
+      <Header className="App-header">
+        <h1>Welcome to City Explorer!</h1>
+      </Header>
     );
   }
 }
