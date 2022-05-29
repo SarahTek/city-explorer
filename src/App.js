@@ -3,7 +3,7 @@ import "./App.css";
 import axios from 'axios';
 import Container from 'react-bootstrap/Container';
 import Alert from 'react-bootstrap/Alert';
-import Movies from './Movies';
+import Movies from './movies';
 import Weather from './Weather';
 import SearchForm from './SearchForm'
 import Header from "./Header";

@@ -5,7 +5,7 @@ import Movie from './Movie';
 class Movies extends React.Component {
   render() {
     return (
-      <div className="">
+      <div>
         <h3>Movies</h3>
         <Row sm={2} md={3} lg={4} >
           {
@@ -14,7 +14,7 @@ class Movies extends React.Component {
             ))}
         </Row>
       </div>
-    );
+    )
   }
 }
 export default Movies;
