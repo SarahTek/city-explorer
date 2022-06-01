@@ -1,6 +1,5 @@
 import React from "react";
 import { Col, Card } from "react-bootstrap";
-// import Movie from './Movie';
 
 class Movie extends React.Component {
   render() {
