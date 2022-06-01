@@ -14,7 +14,7 @@ class Movies extends React.Component {
             ))}
         </Row>
       </div>
-    );
+    )
   }
 }
 export default Movies;
