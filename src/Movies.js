@@ -1,26 +1,18 @@
 import React from "react";
-import Card from 'react-bootstrap/Card';
+import Row from "react-bootstrap/Row";
+import Movie from './Movie';
 
 class Movies extends React.Component {
-
   render() {
     return (
       <div className="">
-        {
-          this.props.movies && this.props.movies.map(value => (
-      <Card >
-        <Card.Img src={value.image_url}/>
-        <Card.Body>
-        <Card.Header>{value.title}</Card.Header>
-        <Card.Text>{value.description}</Card.Text>
-        <Card.Text>{value.average_votes}</Card.Text>
-        <Card.Text>{value.total_votes}</Card.Text>
-        <Card.Text>{value.popularity}</Card.Text>
-        <Card.Text>{value.released_on}</Card.Text>
-        </Card.Body>
-      </Card>
-          ))
-        }
+        <h3>Movies</h3>
+        <Row sm={2} md={3} lg={4} >
+          {
+            this.props.moviesArr.map((movie, idx) => (
+              <Movie movie={movie} idx={idx} />
+            ))}
+        </Row>
       </div>
     );
   }
