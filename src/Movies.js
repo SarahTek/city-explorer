@@ -5,7 +5,7 @@ import Movie from './Movie';
 class Movies extends React.Component {
   render() {
     return (
-      <div>
+      <div className="">
         <h3>Movies</h3>
         <Row sm={2} md={3} lg={4} >
           {
