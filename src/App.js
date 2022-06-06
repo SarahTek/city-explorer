@@ -1,13 +1,13 @@
 import React from 'react';
-import "./App.css";
+import './App.css';
 import axios from 'axios';
-import Container from 'react-bootstrap/Container';
-import Alert from 'react-bootstrap/Alert';
-import Movies from './movies';
-import Weather from './Weather';
-import SearchForm from './SearchForm'
-import Header from "./Header";
-import Location from "./Location";
+ import Header from './Header';
+ import Container from 'react-bootstrap/Container';
+ import Alert from 'react-bootstrap/Alert';
+ import Movies from './Movies';
+ import Weather from './Weather';
+ import SearchForm from './SearchForm'
+import Location from './Location';
 
 
 
@@ -31,9 +31,8 @@ class App extends React.Component {
     console.log(typedCity);
   }
 
-  getLocation = async (event) => {
-    event.preventDefault();
-    const url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATION_KEY}&q=${this.state.searchQuery}&format=json`;
+  getLocation = async () => {
+    const url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATION_KEY}&q=${this.state.city}&format=json`;
     console.log('URL: ', url);
     try {
       let response = await axios.get(url);
@@ -49,7 +48,7 @@ class App extends React.Component {
 
   getWeather = async () => {
 
-    const url = `${process.env.REACT_APP_SERVER}/weather?lat=${this.state.locationObj.lat}&lon=${this.state.locationObj.lon}&searchQuery=${this.state.city}`
+    const url = `${process.env.REACT_APP_SERVER}/weather?searchQuery=${this.state.city}`
     try {
       let response = await axios.get(url);
       console.log('Weather Response: ', response.data);
@@ -81,19 +80,22 @@ class App extends React.Component {
     }
   };
 
-  getWeatherAndMovies = () => {
-    this.getWeather();
-    this.getMovies();
+  handleSubmit = async (event) => {
+    event.preventDefault();
+   await  this.getLocation();
+   await this.getWeather();
+   await this.getMovies();
   }
 
 
   render() {
     return (
       <div className='Main'>
+        <h1>Hello</h1>
         <Header />
         <SearchForm
           handleChange={this.handleChange}
-          getLocation={this.getLocation}
+          handleSubmit={this.handleSubmit}
         />
 
         {this.state.locationObj.display_name &&

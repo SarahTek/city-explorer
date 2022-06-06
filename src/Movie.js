@@ -7,8 +7,10 @@ class Movie extends React.Component {
 
       <Col key={this.props.idx} >
         <Card style={{ width: "18rem" }}>
-
-          <Card.Img veriant="top" src={this.props.movie.image_url} alt={this.props.movie.title} />
+          {
+            this.props.movie.image_url &&
+            <Card.Img veriant="top" src={this.props.movie.image_url} alt={this.props.movie.title} />
+          }
           <Card.Body>
             <Card.Text>Titile: {this.props.movie.title}</Card.Text>
             <Card.Text>Description: {this.props.movie.description}</Card.Text>

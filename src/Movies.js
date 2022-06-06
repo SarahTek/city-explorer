@@ -10,7 +10,7 @@ class Movies extends React.Component {
         <Row sm={2} md={3} lg={4} >
           {
             this.props.moviesArr.map((movie, idx) => (
-              <Movie movie={movie} idx={idx} />
+              <Movie movie={movie} key={idx} />
             ))}
         </Row>
       </div>

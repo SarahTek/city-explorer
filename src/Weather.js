@@ -8,7 +8,7 @@ class Weather extends React.Component {
       <Accordion defaultActiveKey="0">
         {
           this.props.weatherArr.map((dayObj, idx) => (
-            <WeatherDay idx={idx} dayObj={dayObj} />
+            <WeatherDay  key={idx} dayObj={dayObj} />
           ))
         }
       </Accordion>

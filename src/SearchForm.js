@@ -7,7 +7,7 @@ class SearchForm extends React.Component {
     render() {
         return (
             <Container>
-                <Form className='form' onSubmit={(event) => this.props.getLocation(event)}>
+                <Form className='form' onSubmit={this.props.handleSubmit}>
                     Your City:{" "}
                     <Form.Control type="text" name="yourcity" onChange={(event) => this.props.handleChange(event)} />
                     <Button type='submit'>Search</Button>
