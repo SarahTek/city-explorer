@@ -91,7 +91,7 @@ class App extends React.Component {
   render() {
     return (
       <div className='Main'>
-        <h1>Hello</h1>
+        {/* <h1>Hello</h1> */}
         <Header />
         <SearchForm
           handleChange={this.handleChange}
