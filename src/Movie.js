@@ -5,7 +5,7 @@ class Movie extends React.Component {
   render() {
     return (
 
-      <Col key={this.props.idx} >
+      <Col key={this.props.key} >
         <Card style={{ width: "18rem" }}>
           {
             this.props.movie.image_url &&
